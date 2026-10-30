@@ -29,4 +29,4 @@ A imagem de marca anexada à conversa orientou o símbolo geométrico e a assina
 
 ## Decisões de conteúdo
 
-O WhatsApp **(65) 99265-3142** foi confirmado pelo cliente durante a execução e aplicado em todos os canais. O número alternativo das campanhas foi omitido. Não foram criados nome completo/CREA, anos de experiência, quantidade de obras, depoimentos, valores de financiamento ou vínculos bancários. O contato e o horário vêm do briefing, e os textos foram condensados conforme solicitado.
+O WhatsApp **(65) 99943-8988** foi confirmado pelo cliente durante a execução e aplicado em todos os canais. O número alternativo das campanhas foi omitido. Não foram criados nome completo/CREA, anos de experiência, quantidade de obras, depoimentos, valores de financiamento ou vínculos bancários. O contato e o horário vêm do briefing, e os textos foram condensados conforme solicitado.

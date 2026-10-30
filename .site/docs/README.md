@@ -1,6 +1,6 @@
 # Vilela Engenharia — manutenção e publicação
 
-Site editorial em português, com GSAP/ScrollTrigger, navegação suave no desktop, retratos originais e contato confirmado no WhatsApp **(65) 99265-3142**. Código-fonte em `.site/`; produção estática na raiz do repositório. Todo o trabalho acontece na **main**, sem worktrees ou outras branches.
+Site editorial em português, com GSAP/ScrollTrigger, navegação suave no desktop, retratos originais e contato confirmado no WhatsApp **(65) 99943-8988**. Código-fonte em `.site/`; produção estática na raiz do repositório. Todo o trabalho acontece na **main**, sem worktrees ou outras branches.
 
 ## Arquivos
 

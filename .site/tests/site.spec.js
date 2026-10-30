@@ -55,7 +55,7 @@ test("production loads locally with no JavaScript errors, missing assets or thir
   const schema = await page
     .locator('script[type="application/ld+json"]')
     .textContent();
-  expect(JSON.parse(schema).telephone).toBe("+5565992653142");
+  expect(JSON.parse(schema).telephone).toBe("+5565999438988");
 });
 
 test("hero scrolls directly into the next block with its layered wordmark intact", async ({
@@ -111,7 +111,7 @@ test("service accordion is exclusive, accessible and contains working contact UR
   await expect(page.locator("#service-panel-1")).toBeHidden();
   await expect(page.locator("#service-panel-2 a")).toHaveAttribute(
     "href",
-    /^https:\/\/wa.me\/5565992653142\?text=/,
+    /^https:\/\/wa.me\/5565999438988\?text=/,
   );
   await page.locator("#service-button-3").focus();
   await page.keyboard.press("Enter");
@@ -119,6 +119,36 @@ test("service accordion is exclusive, accessible and contains working contact UR
   await expect(page.locator("#service-panel-2")).toBeHidden();
   await page.locator("#service-button-3").click();
   await expect(page.locator("#service-panel-3")).toBeHidden();
+});
+
+test("every WhatsApp button uses the current number and a relevant message", async ({
+  page,
+}) => {
+  await ready(page);
+  const links = await page.locator('a[href^="https://wa.me/"]').evaluateAll((anchors) =>
+    anchors.map((anchor) => ({
+      label: anchor.getAttribute("aria-label") || anchor.textContent.trim(),
+      href: anchor.href,
+    })),
+  );
+  expect(links.length).toBeGreaterThan(7);
+  for (const link of links) {
+    const url = new URL(link.href);
+    expect(url.pathname, link.label).toBe("/5565999438988");
+    expect(url.searchParams.get("text"), link.label).toMatch(/Vilela Engenharia|projeto|obra|financiamento/i);
+  }
+  const contexts = [
+    ["Quero planejar minha casa", /projeto residencial/i],
+    ["Vamos falar da sua obra", /construção.*obra/i],
+    ["Encontre o próximo passo", /planejar meu projeto/i],
+    ["Conversar sobre financiamento", /financiamento habitacional/i],
+    ["Começar meu projeto", /começar um projeto/i],
+  ];
+  for (const [label, message] of contexts) {
+    const link = links.find((item) => item.label.includes(label));
+    expect(link, label).toBeDefined();
+    expect(new URL(link.href).searchParams.get("text")).toMatch(message);
+  }
 });
 
 test("gallery supports arrows, keyboard, enlargement and Escape with focus restoration", async ({
@@ -175,7 +205,7 @@ test("project enquiry validates input and prepares an encoded WhatsApp draft wit
   const outbound = await page.evaluate(() => window.__outbound);
   const url = new URL(outbound.url);
   expect(url.hostname).toBe("wa.me");
-  expect(url.pathname).toBe("/5565992653142");
+  expect(url.pathname).toBe("/5565999438988");
   expect(url.searchParams.get("text")).toContain("Ana & João");
   expect(url.searchParams.get("text")).toContain("<script>teste</script>");
   expect(outbound.features).toBe("noopener,noreferrer");
@@ -332,11 +362,11 @@ test("without JavaScript the content and direct WhatsApp and gallery links remai
   await expect(page.locator("#about-heading")).toBeVisible();
   await expect(page.locator(".hero [data-enquiry]")).toHaveAttribute(
     "href",
-    "https://wa.me/5565992653142",
+    /^https:\/\/wa\.me\/5565999438988\?text=/,
   );
   await expect(page.locator(".phone-link")).toHaveAttribute(
     "href",
-    "https://wa.me/5565992653142",
+    /^https:\/\/wa\.me\/5565999438988\?text=/,
   );
   await expect(page.locator("[data-gallery]").first()).toHaveAttribute(
     "href",
