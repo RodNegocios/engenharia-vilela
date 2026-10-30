@@ -7,14 +7,14 @@ Validação local em Chromium, Node 24.19.0 e npm 11.9.0. Os resultados abaixo d
 - Instalação limpa com `npm ci`, usando o lockfile versionado.
 - `npm run check` e build Vite concluídos. HTML/CSS/JS, fontes, licenças e imagens são publicados na raiz pelo script de build.
 - Auditoria npm: **zero vulnerabilidades conhecidas** na consulta realizada; isso é uma observação da base consultada, não uma garantia permanente.
-- **12 testes Playwright**: carregamento sem erros ou recursos externos; câmera e máscara do hero; reserva de espaço para impedir sobreposição do segundo bloco; acordeão; galeria; lightbox; foco; formulário e codificação do WhatsApp; movimento reduzido, inclusive troca em tempo real; telas de 360, 390 e 768 px; análise axe em desktop/mobile/formulário; bloqueio local de arquivos internos; conteúdo e contatos sem JavaScript.
+- **12 testes Playwright**: carregamento sem erros ou recursos externos; máscara do hero e passagem direta para o segundo bloco, sem pin ou zoom; acordeão; galeria; lightbox; foco; formulário e codificação do WhatsApp; movimento reduzido, inclusive troca em tempo real; telas de 360, 390 e 768 px; análise axe em desktop/mobile/formulário; bloqueio local de arquivos internos; conteúdo e contatos sem JavaScript.
 - No formulário, a abertura externa é interceptada no teste e a URL é inspecionada. Nenhuma mensagem real é enviada.
-- Capturas manuais em 1440 × 900 e 390 × 844, incluindo estados intermediários de câmera e transição, enquadramentos dos retratos e página completa com imagens carregadas.
+- Revisão do hero em 1440 × 900, 360 × 740, 390 × 844 e 430 × 932. Na entrega inicial também foram revisados os enquadramentos dos retratos e a página completa.
 - Todos os 11 originais foram comparados byte a byte com os blobs da main recebida. O inventário registra hashes e tamanhos.
 
 ## Lighthouse móvel
 
-Perfil móvel simulado, Chromium headless e servidor local com gzip equivalente ao configurado no `.htaccess`:
+Auditoria da entrega inicial (commit `05f8ee0`), anterior à revisão do nome VILELA e à remoção da transição do hero. Não foi refeita nesta alteração visual. Perfil móvel simulado, Chromium headless e servidor local com gzip equivalente ao configurado no `.htaccess`:
 
 | Categoria / métrica | Resultado |
 | --- | --- |

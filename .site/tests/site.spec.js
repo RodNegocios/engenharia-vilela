@@ -58,57 +58,43 @@ test("production loads locally with no JavaScript errors, missing assets or thir
   expect(JSON.parse(schema).telephone).toBe("+5565992653142");
 });
 
-test("cinematic roof mask and camera animation respond to scroll", async ({
+test("hero scrolls directly into the next block with its layered wordmark intact", async ({
   page,
 }) => {
   await ready(page);
-  await page.waitForTimeout(1800);
-  await expect(page.locator(".pin-spacer")).toHaveCount(1);
-  const initial = await page
-    .locator(".hero-world")
-    .evaluate((el) => getComputedStyle(el).transform);
-  const word = page.locator(".hero-word");
-  await expect(word).toHaveText("VILELA");
+  await page.waitForTimeout(1600);
+  await expect(page.locator(".pin-spacer")).toHaveCount(0);
+  await expect(page.locator(".hero-bridge, .hero-veil")).toHaveCount(0);
+  await expect(page.locator(".hero-word")).toHaveText("VILELA");
   await expect(page.locator(".hero-foreground")).toHaveCSS(
     "clip-path",
     /architecture-mask/,
   );
-  await page.evaluate(() => window.scrollTo({ top: 500, behavior: "instant" }));
-  await page.waitForTimeout(1400);
-  const changed = await page
+  const initial = await page
     .locator(".hero-world")
     .evaluate((el) => getComputedStyle(el).transform);
-  expect(changed).not.toBe(initial);
-  // The pinned section must reserve real document space, never overlay the next block.
+  const boundary = await page.evaluate(() => ({
+    bottom: document.querySelector(".hero").getBoundingClientRect().bottom,
+    next: document.querySelector("#essencia").getBoundingClientRect().top,
+  }));
+  expect(Math.abs(boundary.next - boundary.bottom)).toBeLessThan(1);
+  await page.evaluate(() => window.scrollTo({ top: 500, behavior: "instant" }));
+  await page.waitForTimeout(250);
+  expect(
+    await page
+      .locator(".hero-world")
+      .evaluate((el) => getComputedStyle(el).transform),
+  ).toBe(initial);
+  expect(
+    await page
+      .locator(".hero")
+      .evaluate((el) => el.getBoundingClientRect().top),
+  ).toBeLessThan(-490);
   expect(
     await page
       .locator("#essencia")
       .evaluate((el) => el.getBoundingClientRect().top),
-  ).toBeGreaterThanOrEqual(900);
-  expect(
-    await page
-      .locator(".hero-intro")
-      .evaluate((el) => parseFloat(getComputedStyle(el).opacity)),
-  ).toBeLessThan(0.1);
-  await page.evaluate(() =>
-    window.scrollTo({ top: 1250, behavior: "instant" }),
-  );
-  await page.waitForTimeout(1400);
-  expect(
-    await page
-      .locator(".hero-veil")
-      .evaluate((el) => parseFloat(getComputedStyle(el).opacity)),
-  ).toBeGreaterThan(0.95);
-  expect(
-    await page
-      .locator(".hero-bridge")
-      .evaluate((el) => parseFloat(getComputedStyle(el).opacity)),
-  ).toBeGreaterThan(0.7);
-  expect(
-    await page
-      .locator("#essencia")
-      .evaluate((el) => el.getBoundingClientRect().top),
-  ).toBeGreaterThanOrEqual(900);
+  ).toBeLessThan(450);
 });
 
 test("service accordion is exclusive, accessible and contains working contact URLs", async ({
@@ -211,10 +197,11 @@ test("reduced motion works initially and when toggled live; no pinned scroll or 
   await page.emulateMedia({ reducedMotion: "reduce" });
   await ready(page);
   await expect(page.locator(".pin-spacer")).toHaveCount(0);
-  await expect(page.locator(".hero-bridge")).toBeHidden();
+  await expect(page.locator(".hero-bridge, .hero-veil")).toHaveCount(0);
   await expect(page.locator(".reveal-inner")).toHaveCount(0);
   await page.emulateMedia({ reducedMotion: "no-preference" });
-  await expect(page.locator(".pin-spacer")).toHaveCount(1);
+  await expect(page.locator(".pin-spacer")).toHaveCount(0);
+  expect(await page.locator(".reveal-inner").count()).toBeGreaterThan(0);
   await page.emulateMedia({ reducedMotion: "reduce" });
   await expect(page.locator(".pin-spacer")).toHaveCount(0);
   await expect(page.locator("#about-heading")).toHaveText(

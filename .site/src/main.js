@@ -39,8 +39,8 @@ media.add(
   },
 );
 
-// Architectural depth: the same image aligns exactly in the background and roof mask.
-// Every transform is relative to that shared plane; no generated or altered portrait.
+// The wordmark rises behind the roof on entry; the hero then scrolls normally.
+// Background and architecture mask remain aligned in a shared, stationary plane.
 media.add(
   {
     desktop: "(min-width: 761px)",
@@ -49,54 +49,13 @@ media.add(
   },
   (context) => {
     if (!context.conditions.motion) return;
-    const mobile = context.conditions.mobile;
     const entrance = gsap.timeline({ defaults: { ease: "power3.out" } });
     entrance
-      .from(".hero-word", { yPercent: 65, duration: 1.65 }, 0.05)
+      .from(".hero-word", { yPercent: 30, duration: 1.4 }, 0.05)
       .from(
         ".hero-kicker, .hero h1, .hero-action",
         { y: 26, autoAlpha: 0, stagger: 0.14, duration: 1 },
         0.3,
-      );
-
-    const camera = gsap.timeline({
-      scrollTrigger: {
-        trigger: ".hero",
-        start: "top top",
-        end: () => `+=${window.innerHeight * (mobile ? 1.02 : 1.5)}`,
-        scrub: mobile ? 0.5 : 0.85,
-        pin: true,
-        anticipatePin: 1,
-        invalidateOnRefresh: true,
-      },
-    });
-    camera
-      .to(
-        ".hero-intro, .hero-bottom",
-        { autoAlpha: 0, y: -25, duration: 0.18 },
-        0,
-      )
-      .to(
-        ".hero-world",
-        { scale: mobile ? 2.8 : 3.7, duration: 1, ease: "power2.inOut" },
-        0,
-      )
-      .to(
-        ".hero-word",
-        { yPercent: -10, scale: 1.1, duration: 1, ease: "power1.inOut" },
-        0,
-      )
-      .to(".hero-gradient", { autoAlpha: 0, duration: 0.3 }, 0.2)
-      .to(
-        ".hero-veil",
-        { opacity: 1, duration: 0.38, ease: "power1.inOut" },
-        0.52,
-      )
-      .fromTo(
-        ".hero-bridge",
-        { autoAlpha: 0, y: 50 },
-        { autoAlpha: 1, y: 0, duration: 0.35 },
-        0.72,
       );
 
     // Editorial line reveals: 3D rotation, clip and stagger, inspired by React Bits ScrollFloat.

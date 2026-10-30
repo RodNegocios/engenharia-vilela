@@ -64,9 +64,9 @@ As fotos de arquitetura são apresentadas como **referências e possibilidades**
 
 Para recriar as derivações WebP, use Python com Pillow e execute `python3 .site/scripts/images.py` na raiz. Os arquivos derivados estão versionados, portanto Python não é necessário no build habitual.
 
-O hero usa duas instâncias alinhadas da mesma imagem e uma máscara SVG da cobertura. O texto é intercalado entre as camadas. Durante o scroll, a cena inteira se aproxima, com transição para o fundo da seção seguinte. A fotografia de fundo e a máscara devem manter exatamente a mesma escala; não mova uma delas isoladamente, pois a casa duplicaria.
+O hero usa duas instâncias alinhadas da mesma imagem e uma máscara SVG da cobertura. O texto é intercalado entre as camadas. O nome usa Cormorant Garamond em estilo romano, com entrada breve por trás do telhado e escala ampliada no celular. O hero acompanha a rolagem normal, sem pin, zoom ou tela intermediária antes da seção seguinte. A fotografia de fundo e a máscara devem manter exatamente a mesma escala; não mova uma delas isoladamente, pois a casa duplicaria.
 
-Em telas pequenas, a cena usa um percurso de scroll menor, título ajustado e rolagem nativa. `prefers-reduced-motion` elimina pin, zoom, parallax, reveals e smooth scrolling. O HTML continua legível sem JavaScript, com contatos e links reais de imagem.
+Em telas pequenas, o título ocupa quase toda a largura disponível e a rolagem é nativa. `prefers-reduced-motion` elimina a animação de entrada, parallax, reveals e smooth scrolling. O HTML continua legível sem JavaScript, com contatos e links reais de imagem.
 
 ## Segurança e privacidade
 

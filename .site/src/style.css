@@ -16,6 +16,15 @@
     format("woff2");
 }
 
+@font-face {
+  font-family: "Cormorant Garamond";
+  font-style: normal;
+  font-display: swap;
+  font-weight: 500;
+  src: url("@fontsource/cormorant-garamond/files/cormorant-garamond-latin-500-normal.woff2")
+    format("woff2");
+}
+
 :root {
   --paper: #f6f4f0;
   --ink: #202125;
@@ -253,7 +262,7 @@ em {
   background: #49473e;
   color: var(--paper);
 }
-.hero-sticky {
+.hero-scene {
   position: relative;
   height: 100svh;
   min-height: 680px;
@@ -268,8 +277,6 @@ em {
   top: 50%;
   transform: translate(-50%, -50%);
   container-type: inline-size;
-  transform-origin: 50% 27%;
-  will-change: transform;
 }
 .hero-background,
 .hero-foreground {
@@ -287,11 +294,12 @@ em {
 .hero-word {
   position: absolute;
   left: 5%;
-  top: 11.8%;
+  top: max(9.5%, 100px);
   width: 90%;
-  font-size: 21.9cqw;
-  line-height: 0.82;
-  letter-spacing: -0.065em;
+  font-family: var(--serif);
+  font-size: min(28cqw, 32vw);
+  line-height: 0.78;
+  letter-spacing: -0.055em;
   font-weight: 500;
   text-align: center;
   color: #f4f0e8;
@@ -429,36 +437,6 @@ em {
 .hero-coordinate {
   font-size: 9px;
   letter-spacing: 0.13em;
-}
-.hero-veil {
-  position: absolute;
-  inset: 0;
-  background: var(--paper);
-  opacity: 0;
-  pointer-events: none;
-}
-.hero-bridge {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 28px;
-  color: var(--ink);
-  opacity: 0;
-  pointer-events: none;
-  text-align: center;
-  padding: var(--gutter);
-}
-.hero-bridge > span:nth-child(2) {
-  font-size: clamp(40px, 6.5vw, 108px);
-  line-height: 1.1;
-  letter-spacing: -0.05em;
-}
-.hero-bridge .icon {
-  margin-top: 24px;
-  color: var(--red);
 }
 .section-space {
   padding: 100px var(--gutter) 110px;
@@ -1560,7 +1538,7 @@ dialog::backdrop {
     margin-left: auto;
   }
   .hero,
-  .hero-sticky {
+  .hero-scene {
     min-height: 640px;
     height: 100svh;
     max-height: 1050px;
@@ -1570,13 +1548,12 @@ dialog::backdrop {
     height: 100svh;
     min-height: 640px;
     min-width: 1137px;
-    transform-origin: 50% 33%;
   }
   .hero-word {
-    font-size: 21cqw;
-    top: 13%;
-    left: 5%;
-    width: 90%;
+    width: 96vw;
+    left: calc(50% - 48vw);
+    font-size: 31vw;
+    top: 23.5%;
   }
   .hero-intro {
     bottom: 97px;
@@ -1626,12 +1603,6 @@ dialog::backdrop {
       rgba(8, 14, 10, 0.2) 50%,
       rgba(8, 14, 10, 0.88) 100%
     );
-  }
-  .hero-bridge > span:nth-child(2) {
-    font-size: 48px;
-  }
-  .hero-bridge .eyebrow {
-    font-size: 8px;
   }
   .section-space {
     padding: 65px var(--gutter) 70px;
@@ -2019,13 +1990,6 @@ dialog::backdrop {
     animation-duration: 0.01ms !important;
     transition-duration: 0.01ms !important;
   }
-  .hero-world {
-    will-change: auto;
-  }
-  .hero-bridge,
-  .hero-veil {
-    display: none;
-  }
   .project-image:hover > img,
   .office-image:hover > img {
     transform: none;
@@ -2061,12 +2025,6 @@ dialog::backdrop {
   opacity: 0.55;
 }
 @media (max-width: 760px) {
-  .hero-word {
-    width: 92vw;
-    left: calc(50% - 46vw);
-    font-size: 22.5vw;
-    top: 27%;
-  }
   .hero-action {
     justify-self: auto;
     width: 100%;
