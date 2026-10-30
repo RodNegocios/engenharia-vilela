@@ -1,0 +1,10 @@
+.site/node_modules/
+.site/dist/
+.site/test-results/
+.site/reports/
+.site/.cache/
+.env
+.env.*
+!.env.example
+*.log
+.DS_Store

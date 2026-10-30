@@ -1,0 +1,32 @@
+# Hostinger / Apache / LiteSpeed. Production is served directly from this root.
+Options -Indexes -MultiViews
+DirectoryIndex index.html
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  # Keep all source, originals, Git history, workflows and dotfiles private.
+  RewriteRule (^|/)\.(?!well-known(?:/|$)) - [F,L,NC]
+  RewriteRule ^(?:node_modules|src|source|scripts|tests|docs|materials)(?:/|$) - [F,L,NC]
+</IfModule>
+<FilesMatch "(?i)(^\.|\.(?:map|log|sql|sqlite|bak|env|ini|toml|ya?ml|md)$|^(?:package(?:-lock)?\.json|composer\.(?:json|lock)|yarn\.lock|Dockerfile)$)">
+  Require all denied
+</FilesMatch>
+<IfModule mod_headers.c>
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+  Header always set X-Frame-Options "DENY"
+  Header always set Permissions-Policy "camera=(), microphone=(), geolocation=(), payment=()"
+  Header always set Content-Security-Policy "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action https://wa.me; frame-ancestors 'none'; upgrade-insecure-requests"
+  <FilesMatch "\.(?:webp|woff2|svg)$">
+    Header set Cache-Control "public, max-age=604800"
+  </FilesMatch>
+  <FilesMatch "-[A-Za-z0-9_-]+\.(?:css|js)$">
+    Header set Cache-Control "public, max-age=31536000, immutable"
+  </FilesMatch>
+  <FilesMatch "\.html$">
+    Header set Cache-Control "no-cache"
+  </FilesMatch>
+</IfModule>
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/css application/javascript application/json image/svg+xml
+</IfModule>
