@@ -1553,7 +1553,7 @@ dialog::backdrop {
     width: 96vw;
     left: calc(50% - 48vw);
     font-size: 31vw;
-    top: 23.5%;
+    top: 20.5%;
   }
   .hero-intro {
     bottom: 97px;
